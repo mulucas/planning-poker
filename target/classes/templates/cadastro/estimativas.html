@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<!-- Compiled and minified JavaScript -->
+<script>
+	src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" >
+</script>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Compiled and minified JavaScript -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+<style type="text/css">
+input[type=button], input[type=submit], input[type=reset] {
+	color: white;
+	cursor: pointer;
+}
+
+.content {
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px;
+}
+</style>
+</head>
+<body>
+	<div class="content">
+		<h3>Estimativa feita pela Equipe de Desenvolvimento</h3>
+		<br>
+	</div>
+
+	<a class="waves-effect waves-light btn" href="/cadastroitem">
+		cadastro </a>
+	<br>
+	<br>
+	<br>
+
+	<fieldset>
+		<legend>Item</legend>
+		<div th:each="p: ${itemobj}">
+			<div class="row">
+				<p>
+					Nome: <span th:text="${p.nome}"></span>
+				</p>
+				<p>
+					Historia: <span th:text="${p.historia}"></span>
+				</p>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>Cadastro</legend>
+		<div class="row">
+			<form
+				th:action="@{/addestimativaItem/{iditem}(iditem=${itemobj.id})}"
+				method="post" class="col s12">
+				<div class="row">
+
+					<div class="col input-field col s2">
+						<label for="valor" class="active">Selecione a carta</label> <select
+							id="valor" name="valor">
+							<option value="" disabled selected>Cartas</option>
+							<option value="0" th:text="0" data-icon="/images/zero.png" />
+							<option value="1/2" th:text="1/2" data-icon="/images/umMeio.png" />
+							<option value="1" th:text="1" data-icon="/images/um.png">1</option>
+							<option value="2" th:text="2" data-icon="/images/dois.png">2</option>
+							<option value="3" th:text="3" data-icon="/images/tres.png">3</option>
+							<option value="5" th:text="5" data-icon="/images/cinco.png">5</option>
+							<option value="8" th:text="8" data-icon="/images/oito.png">8</option>
+							<option value="40" th:text="40" data-icon="/images/quarenta.png">40</option>
+							<option value="80" th:text="80" data-icon="/images/oitenta.png">80</option>
+							<option value="100" th:text="100" data-icon="/images/cem.png">100</option>
+							<option value="infinito" th:text="infinito"
+								data-icon="/images/infinito.png">infinito</option>
+							<option value="?" th:text="_?_"
+								data-icon="/images/interrogacao.png">?</option>
+							<option value="cafe" th:text="cafe" data-icon="/images/cafe.png">cafe</option>
+
+						</select>
+
+					</div>
+					<div class="input-field col s10">
+						<label class="active" for="descricao">Descrição do valor
+							proposto:</label> <input id="descricao" name="descricao" class="validate">
+					</div>
+
+					<div class="input-field col s6">
+						<label class="active" for="nome">Seu nome:</label> <input
+							id="nome" name="nome" class="validate">
+					</div>
+
+					<input type="submit" value="Lançar Carta"
+						class="waves-effect waves-light btn">
+				</div>
+			</form>
+		</div>
+	</fieldset>
+	<h5>Estimativas</h5>
+	<fieldset>
+		<table class="striped">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Valor</th>
+					<th>Descrição</th>
+					<th>Excluir</th>
+				</tr>
+			</thead>
+			<tr th:each="estimativa : ${estimativas}">
+				<th th:text=${estimativa.nome}></th>
+				<th th:text=${estimativa.valor}></th>
+				<th th:text=${estimativa.descricao}></th>
+				<td><a
+					th:href="@{/removerestimativa/{idestimativa}(idestimativa=${estimativa.id})}">Excluir</a>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('select').material_select();
+		});
+	</script>
+
+</body>
+</html>
